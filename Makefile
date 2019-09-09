@@ -3,6 +3,7 @@ include help.mk
 init:
 	make build
 	make _wakeup
+	make db/drop
 	make db/create
 	make db/migrate
 
