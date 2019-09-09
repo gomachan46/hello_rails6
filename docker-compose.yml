@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.22
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "23306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+  web:
+    build: .
+    environment:
+      - EDITOR=vi
+    command: make server
+    volumes:
+      - .:/myapp
+      - tmp_web:/myapp/tmp
+      - bundle_web:/usr/local/bundle
+    ports:
+      - "23333:3000"
+    depends_on:
+      - db
+
+volumes:
+  mysql:
+    driver: 'local'
+  bundle_web:
+    driver: 'local'
+  tmp_web:
